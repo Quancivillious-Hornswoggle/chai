@@ -5,6 +5,7 @@ This repository contains the source code for the "Chai" command-line AI chat app
 ## Author
 
 **Name: Ian**
+**Name: Ian**
 
 ## Lab 1: Flat-File Persistence
 

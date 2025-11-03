@@ -1,7 +1,7 @@
 import time
 import os
-from db_wrappers.mongodb_manager import MongoDBManager
-
+from db_wrappers.flat_file_manager import FlatFileManager
+import json
 
 def main():
     """
@@ -41,13 +41,16 @@ def main():
         # Store new thread name
         db_manager.save_conversation(user_id, thread_name, [])
     else:
-        thread_name = threads[choice]
+        # No existing threads, prompt for a new thread name
+        print("\nWelcome! You don't have any conversation threads yet.")
+        thread_name = input("Enter a name for your first thread: ").strip()
+        if not thread_name:
+            thread_name = "default"
+            print(f"Using default thread name: '{thread_name}'")
 
-    run_chat(db_manager, user_id, thread_name)
-
-    # Don't forget to close the connection when done!
-    db_manager.close()
-
+    # Create the conversation_id from user_id and thread_name
+    conversation_id = f"{user_id}_{thread_name}"
+    run_chat(db_manager, conversation_id)
 
 def run_chat(db_manager: MongoDBManager, user_id: str, thread_name: str) -> None:
     """
@@ -60,13 +63,17 @@ def run_chat(db_manager: MongoDBManager, user_id: str, thread_name: str) -> None
     duration = end_time - start_time
 
     if messages:
-        print(f"\n--- Conversation History ({len(messages)} messages) ---")
+        print("\n--- Previous messages ---")
         for message in messages:
-            role = message['role'].capitalize()
-            print(f"{role}: {message['content']}")
-        print(f"Load time: {duration:.4f} seconds\n")
+            role = message.get('role', 'unknown')
+            content = message.get('content', '')
+            if role == 'user':
+                print(f"You: {content}")
+            elif role == 'assistant':
+                print(f"AI: {content}")
+        print(f"--- End of history (Load time: {duration:.4f} seconds) ---\n")
 
-    print(f"Conversation: '{thread_name}'. Type 'exit' to quit.")
+    print(f"Conversation: '{conversation_id}'. Type 'exit' to quit.")
 
     while True:
         user_input = input("> ")
@@ -95,3 +102,4 @@ def run_chat(db_manager: MongoDBManager, user_id: str, thread_name: str) -> None
 
 if __name__ == "__main__":
     main()
+
