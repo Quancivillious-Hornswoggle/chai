@@ -5,7 +5,7 @@ from db_wrappers.flat_file_manager import FlatFileManager
 from db_wrappers.mongodb_manager import MongoDBManager
 
 PASSWORD = ""
-CONNECTION_STRING = f""
+CONNECTION_STRING = f"mongodb+srv://ians:ALzr3giKH0UwA9BR@cluster.y3qkfeg.mongodb.net/"
 
 def random_string(length=20):
     """Generate a random string for test data."""

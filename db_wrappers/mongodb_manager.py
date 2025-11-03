@@ -79,7 +79,7 @@ if __name__ == "__main__":
     print("Testing MongoDBManager")
 
     connection_string = "mongodb+srv://ians:ALzr3giKH0UwA9BR@cluster.y3qkfeg.mongodb.net/"
-    manager = MongoDBManager(connection_string=connection_string, database_name="chai_test_db")
+    manager = MongoDBManager(connection_string=connection_string, database_name="Cluster")
 
     print("Testing MongoDBManager._ensure_indexes()")
     indexes = list(manager.conversations.list_indexes())

@@ -21,3 +21,21 @@ This lab focuses on building the foundational persistence layer using a simple f
 
 4. What did you notice about performance using this file storage method?
     - The performance was fast for small-scale data and simple read/write operations, but it might slow down as the data size or number of concurrent users increases.
+
+## Lab 2 Questions
+1. Performance Analysis
+    * The time for flat file barely went up; however, MongoDB did go up more in relation to the flat file.
+    * The read times were about the same as the append time.
+
+2. Atomic Operations
+    * Atomic operations are important where multiple messages are added rapidly to make sure all of the messages are saved properly.
+
+3. Scalability
+    * Flat files get slower as the number of users and threads grows because it has to read more files.
+    * MongoDB can handle lots of users and threads with indexes, so finding threads and loading conversations stays fast.
+    * Flat files can hit file system limits, but MongoDB can store millions of documents and supports replication.
+
+4. Data Modeling Design Challenge
+    * Storing messages inside the conversation (embedded) is fast and simple for reading the whole conversation.
+    * Storing each message separately is better for searching, filtering, or really long conversations.
+    * You’d use separate messages if the chat is huge or you need to do analytics on individual messages.
